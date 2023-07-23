@@ -1,26 +1,43 @@
-// Composables
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
+import { useAuth } from "@/store/auth";
+import {auth, redirectIfAuthenticated} from '@/router/guard';
 
 const routes = [
   {
-    path: '/',
-    component: () => import('@/layouts/default/Default.vue'),
+    path: "/login",
+    component: () => import("@/layouts/Login.vue"),
+    beforeEnter: redirectIfAuthenticated,
     children: [
       {
-        path: '',
-        name: 'Home',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+        path: "",
+        name: "login",
+        component: () => import("@/views/Login.vue"),
       },
     ],
   },
-]
+  {
+    path: "/",
+    component: () => import("@/layouts/Dashboard.vue"),
+    beforeEnter: auth,
+    children: [
+      {
+        path: "",
+        name: "dashboard",
+        component: () => import("@/views/Dashboard.vue"),
+      },
+    ],
+  },
+];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
-})
+});
 
-export default router
+router.beforeEach((to, from, next)=>{
+  const authStore = useAuth();
+  authStore.sanctum();
+  next()
+});
+
+export default router;

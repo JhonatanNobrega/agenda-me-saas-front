@@ -1,4 +1,3 @@
-// Utilities
-import { createPinia } from 'pinia'
-
-export default createPinia()
+// Setup plugin PINIA
+import { createPinia } from "pinia";
+export default createPinia();

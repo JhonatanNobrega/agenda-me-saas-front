@@ -1,19 +1,9 @@
-/**
- * plugins/index.js
- *
- * Automatically included in `./src/main.js`
- */
+import { loadFonts } from "./webfontloader";
+import vuetify from "@/plugins/vuetify";
+import router from "@/router";
 
-// Plugins
-import { loadFonts } from './webfontloader'
-import vuetify from './vuetify'
-import pinia from '../store'
-import router from '../router'
-
-export function registerPlugins (app) {
-  loadFonts()
-  app
-    .use(vuetify)
-    .use(router)
-    .use(pinia)
+export function registerPlugins(app) {
+  app.use(vuetify);
+  app.use(router);
+  loadFonts();
 }

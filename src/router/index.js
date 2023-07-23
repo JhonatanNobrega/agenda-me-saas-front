@@ -5,14 +5,26 @@ import {auth, redirectIfAuthenticated} from '@/router/guard';
 const routes = [
   {
     path: "/login",
-    component: () => import("@/layouts/Login.vue"),
+    component: () => import("@/layouts/Auth.vue"),
     beforeEnter: redirectIfAuthenticated,
     children: [
       {
         path: "",
         name: "login",
         component: () => import("@/views/Login.vue"),
-      },
+      }
+    ],
+  },
+  {
+    path: "/cadastrar",
+    component: () => import("@/layouts/Auth.vue"),
+    beforeEnter: redirectIfAuthenticated,
+    children: [
+      {
+        path: "",
+        name: "register",
+        component: () => import("@/views/Register.vue"),
+      }
     ],
   },
   {

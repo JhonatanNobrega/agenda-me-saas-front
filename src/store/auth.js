@@ -26,6 +26,14 @@ export const useAuth = defineStore("auth", {
         meStore.user = null;
       });
     },
+    register(first_name, last_name, email, password) {
+      return axios.post("/api/register", {
+        first_name,
+        last_name,
+        email,
+        password,
+      });
+    },
   },
   getters: {
     isLoggedIn() {
